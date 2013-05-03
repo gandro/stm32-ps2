@@ -1,5 +1,5 @@
 #########################################
-TARGET = src/firmware.a
+FIRMWARE = src/firmware.a
 #########################################
 
 # root directory
@@ -42,15 +42,15 @@ CFLAGS += -std=c99 -pedantic -Wall -Wextra -Wshadow -Wcast-qual
 
 .PHONY: flash gdb-server gdb-client clean
 
-all: firmware.elf
+all: firmware.bin
 
 # main blob
 
-$(TARGET):
+firmware:
 	$(MAKE) -C src
 
-firmware.elf: $(TARGET) libstm32f10x libtinyprintf 
-	$(LD) $(LDFLAGS) -o $@ $(STARTUP) $(TARGET) -lstm32f10x -ltinyprintf 
+firmware.elf: firmware libstm32f10x libtinyprintf
+	$(LD) $(LDFLAGS) -o $@ $(STARTUP) $(FIRMWARE) -lstm32f10x -ltinyprintf
 
 firmware.bin: firmware.elf
 	$(OBJCOPY) -O binary $< $@

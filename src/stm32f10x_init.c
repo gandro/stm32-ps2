@@ -8,9 +8,6 @@ void STM32_Configuration(void)
     /* System Clocks Configuration */
     RCC_Configuration();
 
-    /* Nested Interrupt Vector Configuration */
-    NVIC_Configuration();
-
     /* GPIO Configuration */
     GPIO_Configuration();
 
@@ -22,6 +19,9 @@ void STM32_Configuration(void)
 
     /* Set USART Parameters */
     USART_Configuration();
+
+    /* Nested Interrupt Vector Configuration */
+    NVIC_Configuration();
 
     /* Set SysTick to 1ms */
     SysTick_Config(SystemCoreClock / 1000);
@@ -62,7 +62,6 @@ void GPIO_Configuration(void)
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 
     GPIO_Init(GPIOA, &GPIO_InitStructure);
-
 
     /* Select GPIOA Pin 0 as EXTI Line 0 */
     GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource0);
@@ -150,7 +149,7 @@ void USART_Configuration(void)
           - BaudRate = 9600 baud
           - Word Length = 8 Bits
           - Two Stop Bit
-          - Odd parity
+          - No parity
           - Hardware flow control disabled (RTS and CTS signals)
           - Receive and transmit enabled
     */

@@ -18,4 +18,4 @@ Usage
 Libraries
 ---------
 
-This repository contains code from the [STM32F10x Standard Peripherals Library v3.5.0](http://www.st.com/web/en/catalog/tools/FM147/CL1794/SC961) and the [tinyprintf](https://github.com/cjlano/tinyprintf) library.
+This repository contains code from the [STM32F10x Standard Peripherals Library v3.5.0](http://www.st.com/web/catalog/tools/FM147/CL1794/SC961/SS1743/PF257890) and the [tinyprintf](https://github.com/cjlano/tinyprintf) library.

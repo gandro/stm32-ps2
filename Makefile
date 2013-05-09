@@ -1,5 +1,5 @@
 #########################################
-FIRMWARE = src/firmware.a
+FIRMWARE = $(wildcard src/*.o)
 #########################################
 
 # root directory
@@ -14,9 +14,9 @@ export OBJCOPY=arm-none-eabi-objcopy
 export GDB=arm-none-eabi-gdb
 
 # default flags
-export ASFLAGS=-g
-export LDFLAGS=-L$(ROOT)/lib
-export CFLAGS=-O1 -c -fno-common -mcpu=cortex-m3 -mthumb
+export ASFLAGS=-g -mcpu=cortex-m3 -mthumb
+export LDFLAGS=
+export CFLAGS=-O1 -g -c -fno-common -mcpu=cortex-m3 -mthumb
 
 # flash utils
 export STFLASH=st-flash
@@ -50,7 +50,7 @@ firmware:
 	$(MAKE) -C src
 
 firmware.elf: firmware libstm32f10x libtinyprintf
-	$(LD) $(LDFLAGS) -o $@ $(STARTUP) $(FIRMWARE) -lstm32f10x -ltinyprintf
+	$(LD) $(LDFLAGS) $(ASFLAGS) -o $@ $(FIRMWARE) $(STARTUP) -lstm32f10x -ltinyprintf
 
 firmware.bin: firmware.elf
 	$(OBJCOPY) -O binary $< $@
@@ -71,7 +71,7 @@ flash: firmware.bin
 gdb-server:
 	$(STUTIL) --stlinkv1
 
-gdb-client: lib proj
+gdb-client:
 	$(GDB) --eval-command="target extended-remote :4242" firmware.elf
 
 clean:

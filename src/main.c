@@ -17,9 +17,10 @@ void __io_putchar(void* p, char ch)
 
 int main(void)
 {
+
     /* Initialize system */
     STM32_Configuration();
-    
+
     /* Wire putchar for printf */
     init_printf(0, __io_putchar);
 
@@ -29,6 +30,10 @@ int main(void)
 
     /* Send PS2 BAT Code */
     Delay(200);
+
+    printf("Sending BAT Code...\r\n");
+    GPIO_WriteBit(GPIOC, GPIO_Pin_8, Bit_SET);
+
     PS2_OutputData = 0xAA;
     PS2_SendRequest = Bit_SET;
 
